@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { ControlledEditor } from "@monaco-editor/react";
-import AwesomeDebouncePromise from "awesome-debounce-promise";
+// import AwesomeDebouncePromise from "awesome-debounce-promise";
 
 import socket from "./services/socket";
 
-async function emitEditCode(code: string) {
-    console.log("Atualizando sharedCode");
-    await socket.emit("edit-code", code);
-}
+// async function emitEditCode(code: string) {
+//     console.log("Atualizando sharedCode");
+//     await socket.emit("edit-code", code);
+// }
 
-const emitEditCodeDebounced = AwesomeDebouncePromise(emitEditCode, 750);
+// const emitEditCodeDebounced = AwesomeDebouncePromise(emitEditCode, 750);
 
 function App() {
     const [code, setCode] = useState("");
@@ -41,7 +41,8 @@ function App() {
 
     async function onChangeCode(event: any, value: any) {
         setCode(value as string);
-        await emitEditCodeDebounced(value as string);
+        await socket.emit("edit-code", code);
+        // await emitEditCodeDebounced(value as string);
     }
 
     return (
