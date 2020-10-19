@@ -23,14 +23,20 @@ socket.on("connection", (client) => {
         sharedCode,
     };
 
-    socket.sockets.connected[client.id].emit("login", loginData);
-
     client.emit("new-user", client.id);
 
     client.on("edit-code", (code) => {
-        console.log(`Alteração de código: ${code}`);
         sharedCode = code;
-        socket.emit("edit-code", code);
+
+        // socket.emit("edit-code", code);
+
+        client.broadcast.emit("edit-code", code);
+
+        // for (let socketId in socket.sockets.connected) {
+        //     if (socketId != client.id) {
+        //         socket.sockets.connected[socketId].emit("edit-code", code);
+        //     }
+        // }
     });
 });
 

@@ -24,9 +24,8 @@ function App() {
             console.log("new-user", userId);
         }
 
-        function editCode(code: string) {
-            setCode(code);
-            console.log("edit-code", code);
+        function editCode(sharedCode: string) {
+            setCode(sharedCode);
         }
 
         socket.on("login", login);
@@ -42,8 +41,7 @@ function App() {
 
     async function onChangeCode(event: any, value: any) {
         setCode(value as string);
-        socket.emit("edit-code", code);
-        // await emitEditCodeDebounced(value as string);
+        await emitEditCodeDebounced(value as string);
     }
 
     return (
@@ -61,5 +59,3 @@ function App() {
         </div>
     );
 }
-
-export default App;
