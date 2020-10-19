@@ -23,20 +23,13 @@ socket.on("connection", (client) => {
         sharedCode,
     };
 
-    client.emit("new-user", client.id);
+    client.emit("login", loginData);
+
+    client.broadcast.emit("new-user", client.id);
 
     client.on("edit-code", (code) => {
         sharedCode = code;
-
-        // socket.emit("edit-code", code);
-
         client.broadcast.emit("edit-code", code);
-
-        // for (let socketId in socket.sockets.connected) {
-        //     if (socketId != client.id) {
-        //         socket.sockets.connected[socketId].emit("edit-code", code);
-        //     }
-        // }
     });
 });
 
