@@ -31,12 +31,9 @@ socket.on("connection", (client) => {
 
     client.broadcast.emit("new-user", client.id);
 
-    client.on("edit-code", (editData) => {
-        if (editData.index > clientRequestIndex[client.id]) {
-            sharedCode = editData.code;
-            clientRequestIndex[client.id] = editData.index;
-            client.broadcast.emit("edit-code", editData.code);
-        }
+    client.on("edit-code", (code) => {
+        sharedCode = code;
+        client.broadcast.emit("edit-code", code);
     });
 });
 
