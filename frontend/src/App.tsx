@@ -41,8 +41,9 @@ function App() {
     }, []);
 
     async function onChangeCode(event: any, value: any) {
+        await socket.emit("edit-code", code);
         setCode(value as string);
-        await emitEditCodeDebounced(value as string);
+        // await emitEditCodeDebounced(value as string);
     }
 
     return (
