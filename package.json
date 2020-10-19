@@ -1,0 +1,17 @@
+{
+    "name": "live-snippet",
+    "version": "1.0.0",
+    "main": "index.js",
+    "author": "Bruno Silva <bruno3dcontato@gmail.com>",
+    "license": "MIT",
+    "scripts": {
+        "postinstall": "cd ./backend && yarn && cd ../frontend && yarn && cd ..",
+        "build": "cd ./backend && yarn build && cd ../frontend && yarn build && cd ..",
+        "start": "cd ./backend && yarn start",
+        "build:dev": "cd ./backend && yarn build:dev && cd ../frontend && yarn build:dev && cd ..",
+        "back:dev": "cd ./backend && yarn dev",
+        "back:prod": "cd ./backend && yarn prod",
+        "front:dev": "cd ./frontend && yarn dev",
+        "front:prod": "cd ./frontend && yarn prod"
+    }
+}

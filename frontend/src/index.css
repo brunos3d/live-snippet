@@ -1,0 +1,12 @@
+body {
+    overflow: hidden;
+    background-color: #202124;
+}
+
+html,
+body,
+#root,
+#root > div {
+    width: 100%;
+    height: 100%;
+}
