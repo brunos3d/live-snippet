@@ -15,6 +15,8 @@ const socket = socketio(server);
 let sharedCode =
     'const b = []\n\nfor (let idx = 0; idx < 1000000; idx++) {\n\tb.push("BBBBBBBBBB".toLowerCase() === "bbbbbbbbbb")\n}\n\n/*===*/\n\nconst a = []\n\nfor (let idx = 0; idx < 1000000; idx++) {\n\ta.push("aaaaaaaaaa".toUpperCase() === "AAAAAAAAAA")\n}\n\n/*===*/\n\n1 + 2\n\n/*===*/\n\n// error\na + b';
 
+const clientRequestIndex = {};
+
 socket.on("connection", (client) => {
     console.log(`Nova conexão: ${client.id}`);
 
@@ -23,13 +25,18 @@ socket.on("connection", (client) => {
         sharedCode,
     };
 
+    clientRequestIndex[client.id] = 0;
+
     client.emit("login", loginData);
 
     client.broadcast.emit("new-user", client.id);
 
-    client.on("edit-code", (code) => {
-        sharedCode = code;
-        client.broadcast.emit("edit-code", code);
+    client.on("edit-code", (editData) => {
+        if (editData.index > clientRequestIndex[client.id]) {
+            sharedCode = editData.code;
+            clientRequestIndex[client.id] = editData.index;
+            client.broadcast.emit("edit-code", editData.code);
+        }
     });
 });
 

@@ -11,6 +11,8 @@ import socket from "./services/socket";
 
 // const emitEditCodeDebounced = AwesomeDebouncePromise(emitEditCode, 750);
 
+let requestIndex = 0;
+
 function App() {
     const [code, setCode] = useState("");
 
@@ -24,8 +26,8 @@ function App() {
             console.log("new-user", userId);
         }
 
-        function editCode(sharedCode: string) {
-            setCode(sharedCode);
+        function editCode(editData: { index: number; code: string }) {
+            setCode(editData.code);
         }
 
         socket.on("login", login);
@@ -41,7 +43,7 @@ function App() {
 
     async function onChangeCode(event: any, value: any) {
         setCode(value as string);
-        await socket.emit("edit-code", code);
+        await socket.emit("edit-code", { index: ++requestIndex, code });
         // await emitEditCodeDebounced(value as string);
     }
 
