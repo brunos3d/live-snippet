@@ -27,6 +27,7 @@ function App() {
         }
 
         function editCode(editData: { index: number; code: string }) {
+            requestIndex = editData.index;
             setCode(editData.code);
         }
 
@@ -50,8 +51,9 @@ function App() {
     return (
         <div className="App">
             <ControlledEditor
+                className="controlled-monaco-editor"
                 width="calc(100% - 8px)"
-                height="calc(100% - 8px)"
+                height="calc(100% - 18px)"
                 language="javascript"
                 theme="dark"
                 value={code}
